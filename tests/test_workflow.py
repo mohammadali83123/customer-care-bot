@@ -1,6 +1,6 @@
 # tests/test_workflow.py
 import pytest
-from app.workflow import run_workflow_instance
+from app.workflow.workflow_manager import run_workflow_instance
 import asyncio
 from app.models import StepResult
 
@@ -14,8 +14,8 @@ async def test_workflow_happy_path(monkeypatch):
     async def fake_api2(payload):
         return StepResult(success=True, data={"result":"ok"})
 
-    monkeypatch.setattr("app.services.apis.call_internal_api_1", fake_api1)
-    monkeypatch.setattr("app.services.apis.call_internal_api_2", fake_api2)
+    monkeypatch.setattr("app.workflow.steps.step_3.call_internal_api_1", fake_api1)
+    monkeypatch.setattr("app.workflow.steps.step_5.call_internal_api_2", fake_api2)
 
     result = await run_workflow_instance("wf-1", "user-1", {"message":"what's my order status?"})
     assert result["status"] == "completed"

@@ -3,7 +3,7 @@ from celery import Celery
 from app.config import settings
 import asyncio
 import uuid
-from app.workflow import run_workflow_instance
+from app.workflow.workflow_manager import run_workflow_instance
 
 celery = Celery("worker", broker=settings.redis_url, backend=settings.redis_url)
 celery.conf.task_acks_late = True
