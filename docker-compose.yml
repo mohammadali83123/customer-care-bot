@@ -5,6 +5,22 @@ services:
     ports:
       - "6379:6379"
 
+  mock-api-1:
+    build: .
+    command: uvicorn tests.mock_api1:app --host 0.0.0.0 --port 8001
+    volumes:
+      - ./:/app
+    ports:
+      - "8001:8001"
+
+  mock-api-2:
+    build: .
+    command: uvicorn tests.mock_api2:app --host 0.0.0.0 --port 8002
+    volumes:
+      - ./:/app
+    ports:
+      - "8002:8002"
+
   web:
     build: .
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
@@ -12,13 +28,23 @@ services:
       - ./:/app
     ports:
       - "8000:8000"
+    environment:
+      - INTERNAL_API_1=http://mock-api-1:8001/endpoint
+      - INTERNAL_API_2=http://mock-api-2:8002/endpoint
     depends_on:
       - redis
+      - mock-api-1
+      - mock-api-2
 
   worker:
     build: .
     command: celery -A app.tasks.celery worker --loglevel=info -Q celery
     volumes:
       - ./:/app
+    environment:
+      - INTERNAL_API_1=http://mock-api-1:8001/endpoint
+      - INTERNAL_API_2=http://mock-api-2:8002/endpoint
     depends_on:
       - redis
+      - mock-api-1
+      - mock-api-2
