@@ -35,7 +35,7 @@ async def run_workflow_instance(
     steps = [
         ("Webhook Triggered", step_1.execute),
         ("Initialize Globals", step_2.execute),
-        ("Call Internal API 1", step_3.execute),
+        ("Call CHECK_CUSTOMER_REGISTRATION_API", step_3.execute),
         ("Set Globals After API1", step_4.execute),
         ("Call Internal API 2", step_5.execute),
         ("Set Final Context", step_6.execute),
