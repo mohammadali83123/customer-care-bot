@@ -1,15 +1,14 @@
 # app/config.py
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import HttpUrl
-import os
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env")
     
-    redis_url: str = "redis://redis:6379/0"
-    internal_api_1: HttpUrl = os.getenv("CHECK_CUSTOMER_REGISTRATION_API_URL")
-    internal_api_2: HttpUrl = "http://internal-api-2.local/endpoint"
+    REDIS_URL: str = ""
+    CHECK_CUSTOMER_REGISTRATION_API_URL: HttpUrl
+    FETCH_CUSTOMER_ORDERS_API_URL: HttpUrl
 
-    access_token: str = os.getenv("ACCESS_TOKEN")
+    ACCESS_TOKEN: str = ""
 
 settings = Settings()

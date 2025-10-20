@@ -5,7 +5,7 @@ import asyncio
 import uuid
 from app.workflow.workflow_manager import run_workflow_instance
 
-celery = Celery("worker", broker=settings.redis_url, backend=settings.redis_url)
+celery = Celery("worker", broker=settings.REDIS_URL, backend=settings.REDIS_URL)
 celery.conf.task_acks_late = True
 celery.conf.worker_prefetch_multiplier = 1
 
