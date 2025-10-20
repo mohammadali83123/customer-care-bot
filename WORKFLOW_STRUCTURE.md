@@ -64,7 +64,7 @@ app/workflow/
                       │
 ┌─────────────────────▼────────────────────────────────────────┐
 │ 2. Initialize Globals         (Step 2)                       │
-│    - Set user_id                                             │
+│    - Set customer_id                                             │
 │    - Store event data                                        │
 └─────────────────────┬────────────────────────────────────────┘
                       │
@@ -93,7 +93,7 @@ app/workflow/
                       │
 ┌─────────────────────▼────────────────────────────────────────┐
 │ 7. Run Agent                  (Step 7)                       │
-│    - Analyze user message                                    │
+│    - Analyze customer message                                    │
 │    - Determine intent & action                               │
 └─────────────────────┬────────────────────────────────────────┘
                       │
@@ -161,28 +161,28 @@ app/workflow/
 ```bash
 curl -X POST http://localhost:8000/webhook \
   -H "Content-Type: application/json" \
-  -d '{"user_id": "user123", "event": {"message": "refund please"}}'
+  -d '{"customer_id": "customer123", "event": {"message": "refund please"}}'
 ```
 
 ### 2. Run with Visualization (Debugging)
 ```bash
 curl -X POST http://localhost:8000/workflow/run \
   -H "Content-Type: application/json" \
-  -d '{"user_id": "user123", "event": {"message": "where is my order?"}}' | jq .
+  -d '{"customer_id": "customer123", "event": {"message": "where is my order?"}}' | jq .
 ```
 
 ### 3. View Tree
 ```bash
 curl -X POST http://localhost:8000/workflow/visualize \
   -H "Content-Type: application/json" \
-  -d '{"user_id": "user123", "event": {"message": "hello"}}'
+  -d '{"customer_id": "customer123", "event": {"message": "hello"}}'
 ```
 
 ### 4. Generate Diagram
 ```bash
 curl -X POST http://localhost:8000/workflow/diagram \
   -H "Content-Type: application/json" \
-  -d '{"user_id": "user123", "event": {"message": "help"}}' > diagram.mmd
+  -d '{"customer_id": "customer123", "event": {"message": "help"}}' > diagram.mmd
 
 # Open https://mermaid.live and paste diagram.mmd
 ```

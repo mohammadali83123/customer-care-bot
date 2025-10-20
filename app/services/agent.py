@@ -2,12 +2,12 @@
 from typing import Dict, Any
 from app.models import StepResult
 
-def hardcoded_agentic_response(user_message: str, globals_: Dict[str, Any]) -> StepResult:
+def hardcoded_agentic_response(customer_message: str, globals_: Dict[str, Any]) -> StepResult:
     """
     Simulated agentic response for Step 7 (hardcoded).
     Returns a simple dict used by Step 8 condition handling.
     """
-    msg = (user_message or "").lower()
+    msg = (customer_message or "").lower()
     if "refund" in msg or "return" in msg:
         body = {"intent": "refund_request", "confidence": 0.98, "action": "route_to_refunds"}
     elif "status" in msg or "where is my order" in msg:

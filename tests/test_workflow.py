@@ -17,6 +17,6 @@ async def test_workflow_happy_path(monkeypatch):
     monkeypatch.setattr("app.workflow.steps.step_3.call_internal_api_1", fake_api1)
     monkeypatch.setattr("app.workflow.steps.step_5.call_internal_api_2", fake_api2)
 
-    result = await run_workflow_instance("wf-1", "user-1", {"message":"what's my order status?"})
+    result = await run_workflow_instance("wf-1", "customer-1", "+923001234567", {"message":"what's my order status?"})
     assert result["status"] == "completed"
     assert result["final_status"] in ("order_status_returned", "auto_responded", "routed_to_refunds")

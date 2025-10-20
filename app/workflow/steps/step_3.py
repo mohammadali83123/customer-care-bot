@@ -3,14 +3,15 @@ from typing import Dict, Any, List
 from app.services.apis import call_internal_api_1
 from app.models import StepResult
 
-async def execute(workflow_id: str, user_id: str, event: Dict[str, Any], 
+async def execute(workflow_id: str, customer_id: str, customer_phone_number: str, 
                   globals_: Dict[str, Any], logs: List[str]) -> Dict[str, Any]:
     """
-    Step 3: Call Internal API 1
+    Step 3: Call Check customer registration API
     Make request to first internal API and store response.
     """
-    payload1 = {"user_id": user_id, "event": event}
-    result1: StepResult = await call_internal_api_1(payload1)
+
+    normalized_customer_phone_number = customer_phone_number.replace('+92', '0')
+    result1: StepResult = await call_internal_api_1(normalized_customer_phone_number)
     
     if not result1.success:
         logs.append(f"Step 3 failed: {result1.error}")

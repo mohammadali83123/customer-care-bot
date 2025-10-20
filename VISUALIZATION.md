@@ -19,7 +19,7 @@ Dynamic visual tree structure for workflow execution tracking and debugging.
 curl -X POST http://localhost:8000/workflow/run \
   -H "Content-Type: application/json" \
   -d '{
-    "user_id": "user123",
+    "customer_id": "customer123",
     "event": {"message": "where is my order?"}
   }'
 ```
@@ -46,7 +46,7 @@ Response includes:
 curl -X POST http://localhost:8000/workflow/visualize \
   -H "Content-Type: application/json" \
   -d '{
-    "user_id": "user123",
+    "customer_id": "customer123",
     "event": {"message": "I want a refund"}
   }'
 ```
@@ -75,7 +75,7 @@ Duration: 0.06ms
 curl -X POST http://localhost:8000/workflow/diagram \
   -H "Content-Type: application/json" \
   -d '{
-    "user_id": "user123",
+    "customer_id": "customer123",
     "event": {"message": "Hi"}
   }'
 ```
@@ -91,7 +91,7 @@ import uuid
 # Run workflow with visualization enabled
 result = await run_workflow_instance(
     workflow_id=str(uuid.uuid4()),
-    user_id="user123",
+    customer_id="customer123",
     event={"message": "where is my order?"},
     enable_visualization=True  # Default is True
 )
@@ -167,11 +167,11 @@ By default, Celery tasks run without visualization for performance. To enable:
 # In app/tasks.py - modify run_workflow_task
 
 @celery.task(bind=True, acks_late=True, max_retries=3)
-def run_workflow_task(self, user_id: str, event: dict, enable_viz: bool = False):
+def run_workflow_task(self, customer_id: str, event: dict, enable_viz: bool = False):
     workflow_id = str(uuid.uuid4())
     try:
         return asyncio.get_event_loop().run_until_complete(
-            run_workflow_instance(workflow_id, user_id, event, enable_viz)
+            run_workflow_instance(workflow_id, customer_id, event, enable_viz)
         )
     except Exception as exc:
         raise self.retry(exc=exc, countdown=2 ** self.request.retries)

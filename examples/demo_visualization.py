@@ -4,7 +4,7 @@ Demo script to showcase workflow visualization features.
 """
 import asyncio
 import sys
-sys.path.insert(0, '/Users/Ali/Documents/customer-care-bot')
+sys.path.insert(0, '/customers/Ali/Documents/customer-care-bot')
 
 from app.workflow.workflow_manager import run_workflow_instance
 from app.models import StepResult
@@ -38,7 +38,7 @@ async def demo_visualization():
     
     result1 = await run_workflow_instance(
         workflow_id=str(uuid.uuid4()),
-        user_id="demo-user-1",
+        customer_id="demo-customer-1",
         event={"message": "where is my order?"},
         enable_visualization=True
     )
@@ -59,7 +59,7 @@ async def demo_visualization():
     
     result2 = await run_workflow_instance(
         workflow_id=str(uuid.uuid4()),
-        user_id="demo-user-2",
+        customer_id="demo-customer-2",
         event={"message": "I want a refund"},
         enable_visualization=True
     )
@@ -76,7 +76,7 @@ async def demo_visualization():
     
     result3 = await run_workflow_instance(
         workflow_id=str(uuid.uuid4()),
-        user_id="demo-user-3",
+        customer_id="demo-customer-3",
         event={"message": "Hi, how are you?"},
         enable_visualization=True
     )

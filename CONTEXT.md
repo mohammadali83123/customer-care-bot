@@ -237,7 +237,7 @@ docker-compose up --build
 ### Maintenance Tasks
 - **Regular Updates**: Dependencies and security patches
 - **Performance Monitoring**: Track execution metrics
-- **Feature Development**: Based on user feedback
+- **Feature Development**: Based on customer feedback
 - **Documentation**: Keep examples and guides current
 
 ---

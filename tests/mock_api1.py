@@ -9,7 +9,7 @@ async def api1_endpoint(payload: dict):
     return {
         "value": "mock_value_from_api1",
         "status": "success",
-        "user_id": payload.get("user_id"),
+        "customer_id": payload.get("customer_id"),
         "processed": True
     }
 

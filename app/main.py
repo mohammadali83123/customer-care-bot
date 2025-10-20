@@ -12,7 +12,7 @@ app = FastAPI(title="Customer Care Bot")
 async def webhook(payload: WebhookRequest):
     """Queue workflow execution asynchronously via Celery."""
     try:
-        run_workflow_task.delay(payload.user_id, payload.event)
+        run_workflow_task.delay(payload.customer_id, payload.customer_phone_number, payload.event)
         return {"status": "accepted", "message": "workflow queued"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -27,7 +27,8 @@ async def run_workflow_sync(payload: WebhookRequest):
         workflow_id = str(uuid.uuid4())
         result = await run_workflow_instance(
             workflow_id=workflow_id,
-            user_id=payload.user_id,
+            customer_id=payload.customer_id,
+            customer_phone_number=payload.customer_phone_number,
             event=payload.event,
             enable_visualization=True
         )
@@ -44,7 +45,8 @@ async def visualize_workflow(payload: WebhookRequest):
         workflow_id = str(uuid.uuid4())
         result = await run_workflow_instance(
             workflow_id=workflow_id,
-            user_id=payload.user_id,
+            customer_id=payload.customer_id,
+            customer_phone_number=payload.customer_phone_number,
             event=payload.event,
             enable_visualization=True
         )
@@ -66,7 +68,8 @@ async def get_workflow_diagram(payload: WebhookRequest):
         workflow_id = str(uuid.uuid4())
         result = await run_workflow_instance(
             workflow_id=workflow_id,
-            user_id=payload.user_id,
+            customer_id=payload.customer_id,
+            customer_phone_number=payload.customer_phone_number,
             event=payload.event,
             enable_visualization=True
         )

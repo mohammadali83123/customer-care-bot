@@ -9,7 +9,8 @@ logger = logging.getLogger(__name__)
 
 async def run_workflow_instance(
     workflow_id: str, 
-    user_id: str, 
+    customer_id: str, 
+    customer_phone_number: str, 
     event: Dict[str, Any],
     enable_visualization: bool = True
 ) -> Dict[str, Any]:
@@ -18,7 +19,8 @@ async def run_workflow_instance(
     
     Args:
         workflow_id: Unique identifier for this workflow instance
-        user_id: User ID for the workflow
+        customer_id: Customer ID for the workflow
+        customer_phone_number: Customer phone number for the workflow
         event: Event data to process
         enable_visualization: Whether to generate execution tree visualizations
     """
@@ -47,7 +49,7 @@ async def run_workflow_instance(
         step_start_time = time.time()
         
         try:
-            result = await step_func(workflow_id, user_id, event, globals_, logs)
+            result = await step_func(workflow_id, customer_id, customer_phone_number, event, globals_, logs)
             step_duration = (time.time() - step_start_time) * 1000  # Convert to ms
             
             # Check if step failed
