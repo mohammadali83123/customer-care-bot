@@ -42,9 +42,6 @@ htmlcov/
 *.log
 docker-compose.override.yml
 
-# Project Specific
-commands.md
-
 # Celery
 celerybeat-schedule
 celerybeat.pid
