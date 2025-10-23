@@ -38,7 +38,7 @@ services:
 
   worker:
     build: .
-    command: celery -A app.tasks.celery worker --loglevel=info -Q celery
+    command: python worker_dev.py
     volumes:
       - ./:/app
     environment:
