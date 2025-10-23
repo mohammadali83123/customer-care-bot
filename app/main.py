@@ -12,6 +12,7 @@ app = FastAPI(title="Customer Care Bot")
 async def webhook(payload: WebhookRequest):
     """Queue workflow execution asynchronously via Celery."""
     try:
+        # .delay() is a Celery method to queue the task asynchronously for execution by a worker
         run_workflow_task.delay(payload.customer_id, payload.customer_phone_number, payload.event)
         return {"status": "accepted", "message": "workflow queued"}
     except Exception as e:
