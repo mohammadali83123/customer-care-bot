@@ -3,7 +3,7 @@ from typing import Dict, Any, List
 from app.services.apis import call_internal_api_2
 from app.models import StepResult
 
-async def execute(workflow_id: str, customer_id: str, event: Dict[str, Any], 
+async def execute(workflow_id: str, customer_id: str, customer_phone_number: str, event: Dict[str, Any], 
                   globals_: Dict[str, Any], logs: List[str]) -> Dict[str, Any]:
     """
     Step 5: Call Internal API 2

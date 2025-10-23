@@ -3,7 +3,7 @@ from typing import Dict, Any, List
 from app.services.apis import check_customer_registration_api
 from app.models import StepResult
 
-async def execute(workflow_id: str, customer_id: str, customer_phone_number: str, 
+async def execute(workflow_id: str, customer_id: str, customer_phone_number: str, event: Dict[str, Any], 
                   globals_: Dict[str, Any], logs: List[str]) -> Dict[str, Any]:
     """
     Step 3: Call Check customer registration API
