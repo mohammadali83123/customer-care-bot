@@ -9,7 +9,6 @@ async def execute(workflow_id: str, customer_id: str, customer_phone_number: str
     Step 3: Call Check customer registration API
     Make request to first internal API and store response.
     """
-
     normalized_customer_phone_number = customer_phone_number.replace('+92', '0')
     result1: StepResult = await check_customer_registration_api(normalized_customer_phone_number)
     
