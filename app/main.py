@@ -82,6 +82,74 @@ async def get_workflow_diagram(payload: WebhookRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/workflow/beautified", response_class=PlainTextResponse)
+async def get_beautified_workflow(payload: WebhookRequest):
+    """
+    Run workflow and return beautified output with colors and emojis.
+    """
+    try:
+        workflow_id = str(uuid.uuid4())
+        result = await run_workflow_instance(
+            workflow_id=workflow_id,
+            customer_id=payload.customer_id,
+            customer_phone_number=payload.customer_phone_number,
+            event=payload.event,
+            enable_visualization=True
+        )
+        
+        if "beautified_output" in result:
+            return result["beautified_output"]["tree"]
+        else:
+            return "Beautified output not available"
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/workflow/logs", response_class=PlainTextResponse)
+async def get_complete_logs(payload: WebhookRequest):
+    """
+    Run workflow and return complete beautified logs with all API responses.
+    """
+    try:
+        workflow_id = str(uuid.uuid4())
+        result = await run_workflow_instance(
+            workflow_id=workflow_id,
+            customer_id=payload.customer_id,
+            customer_phone_number=payload.customer_phone_number,
+            event=payload.event,
+            enable_visualization=True
+        )
+        
+        if "beautified_output" in result:
+            return result["beautified_output"]["logs"]
+        else:
+            return "Beautified logs not available"
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/workflow/complete", response_class=PlainTextResponse)
+async def get_complete_output(payload: WebhookRequest):
+    """
+    Run workflow and return complete beautified output (tree + logs).
+    """
+    try:
+        workflow_id = str(uuid.uuid4())
+        result = await run_workflow_instance(
+            workflow_id=workflow_id,
+            customer_id=payload.customer_id,
+            customer_phone_number=payload.customer_phone_number,
+            event=payload.event,
+            enable_visualization=True
+        )
+        
+        if "beautified_output" in result:
+            tree = result["beautified_output"]["tree"]
+            logs = result["beautified_output"]["logs"]
+            return f"{tree}\n\n{logs}"
+        else:
+            return "Beautified output not available"
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/")
 async def root():
     """API information."""
@@ -91,6 +159,9 @@ async def root():
             "POST /webhook": "Queue workflow asynchronously",
             "POST /workflow/run": "Run workflow synchronously with full visualization",
             "POST /workflow/visualize": "Get ASCII tree visualization",
-            "POST /workflow/diagram": "Get Mermaid diagram (paste at mermaid.live)"
+            "POST /workflow/diagram": "Get Mermaid diagram (paste at mermaid.live)",
+            "POST /workflow/beautified": "Get beautified tree output with colors and emojis",
+            "POST /workflow/logs": "Get complete beautified logs with all API responses",
+            "POST /workflow/complete": "Get complete beautified output (tree + logs)"
         }
     }
