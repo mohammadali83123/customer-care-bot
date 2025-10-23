@@ -23,8 +23,8 @@ async def demo_visualization():
     # Monkey-patch the API calls
     import app.workflow.steps.step_3 as step3
     import app.workflow.steps.step_5 as step5
-    step3.call_internal_api_1 = mock_api1
-    step5.call_internal_api_2 = mock_api2
+    step3.check_customer_registration_api = mock_api1
+    step5.fetch_customer_orders_api = mock_api2
     
     print("=" * 80)
     print("WORKFLOW VISUALIZATION DEMO")

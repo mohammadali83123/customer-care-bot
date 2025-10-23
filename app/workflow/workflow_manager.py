@@ -37,7 +37,7 @@ async def run_workflow_instance(
         ("Initialize Globals", step_2.execute),
         ("Call CHECK_CUSTOMER_REGISTRATION_API", step_3.execute),
         ("Set Globals After API1", step_4.execute),
-        ("Call Internal API 2", step_5.execute),
+        ("Call FETCH_CUSTOMER_ORDERS_API", step_5.execute),
         ("Set Final Context", step_6.execute),
         ("Run Agent", step_7.execute),
         ("Conditional Routing", step_8.execute),
