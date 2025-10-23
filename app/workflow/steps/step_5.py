@@ -9,7 +9,7 @@ async def execute(workflow_id: str, customer_id: str, customer_phone_number: str
     Step 5: Call FETCH_CUSTOMER_ORDERS_API
     Make request to second internal API and store response.
     """
-    payload2 = {"customer_id": customer_id, "context": globals_["intermediate_value"]}
+    payload2 = {"store_number": customer_phone_number}
     result2: StepResult = await fetch_customer_orders_api(payload2)
     
     if not result2.success:

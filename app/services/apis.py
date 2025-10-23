@@ -17,7 +17,10 @@ async def check_customer_registration_api(customer_phone_number: str) -> StepRes
 async def fetch_customer_orders_api(payload: dict) -> StepResult:
     async with httpx.AsyncClient() as client:
         try:
-            resp = await client.post(f'{settings.FETCH_CUSTOMER_ORDERS_API_URL}', json=payload, timeout=10.0, headers={"Authorization": f'{settings.ACCESS_TOKEN}'})
+            resp = await client.post(f'{settings.FETCH_CUSTOMER_ORDERS_API_URL}', 
+            json=payload, 
+            timeout=10.0, 
+            headers={"Authorization": f'{settings.ACCESS_TOKEN}'})
             resp.raise_for_status()
             return StepResult(success=True, data=resp.json())
         except Exception as e:
