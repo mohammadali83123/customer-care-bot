@@ -9,6 +9,14 @@ async def api2_endpoint(payload: dict):
     return {
         "result": "processed_by_api2",
         "status": "success",
+        "orders": [
+            {
+                "order_id": "order_123",
+                "status": "shipped",
+                "items": ["item1", "item2"],
+                "total": 100.50
+            }
+        ],
         "context": payload.get("context"),
         "recommendation": "continue_workflow"
     }

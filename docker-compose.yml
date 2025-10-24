@@ -29,8 +29,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - INTERNAL_API_1=http://mock-api-1:8001/endpoint
-      - INTERNAL_API_2=http://mock-api-2:8002/endpoint
+      - REDIS_URL=redis://redis:6379/0
+      - CHECK_CUSTOMER_REGISTRATION_API_URL=http://mock-api-1:8001/endpoint
+      - FETCH_CUSTOMER_ORDERS_API_URL=http://mock-api-2:8002/endpoint
+      - ACCESS_TOKEN=test_token
     depends_on:
       - redis
       - mock-api-1
@@ -42,8 +44,10 @@ services:
     volumes:
       - ./:/app
     environment:
-      - INTERNAL_API_1=http://mock-api-1:8001/endpoint
-      - INTERNAL_API_2=http://mock-api-2:8002/endpoint
+      - REDIS_URL=redis://redis:6379/0
+      - CHECK_CUSTOMER_REGISTRATION_API_URL=http://mock-api-1:8001/endpoint
+      - FETCH_CUSTOMER_ORDERS_API_URL=http://mock-api-2:8002/endpoint
+      - ACCESS_TOKEN=test_token
     depends_on:
       - redis
       - mock-api-1

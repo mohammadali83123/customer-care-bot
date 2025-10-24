@@ -1,0 +1,7 @@
+{
+    "customer_id": "test_customer",
+    "customer_phone_number": "+1234567890",
+    "event": {
+        "message": "I need help with my order status"
+    }
+}
