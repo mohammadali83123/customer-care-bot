@@ -40,9 +40,11 @@ __pycache__/
 **/__pycache__/**
 *.py[cod]
 *$py.class
+*.cpython-*.pyc
 api.cache/
 **/api.cache/
 dump.rdb
+*.cython
 
 # Jupyter Notebook
 .ipynb_checkpoints

@@ -46,3 +46,7 @@ cd /Users/Ali/Documents/customer-care-bot
 source venv/bin/activate
 export REDIS_URL=redis://redis:6379/0 
 celery -A app.tasks.celery worker --loglevel=info -Q celery
+
+<!-- For Hot Reload -->
+watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- \
+    celery -A app.tasks.celery worker --loglevel=info -Q celery
