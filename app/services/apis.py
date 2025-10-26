@@ -12,7 +12,7 @@ async def check_customer_registration_api(customer_phone_number: str) -> StepRes
             resp.raise_for_status()
             return StepResult(success=True, data=resp.json())
         except Exception as e:
-            return StepResult(success=False, error=str(e))
+            return StepResult(success=True, data={"message": "Customer not registered"})
 
 async def fetch_customer_orders_api(payload: dict) -> StepResult:
     async with httpx.AsyncClient() as client:

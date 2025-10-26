@@ -35,6 +35,15 @@ htmlcov/
 .tox/
 *.cover
 
+# Python cache and compiled files
+__pycache__/
+**/__pycache__/**
+*.py[cod]
+*$py.class
+api.cache/
+**/api.cache/
+dump.rdb
+
 # Jupyter Notebook
 .ipynb_checkpoints
 

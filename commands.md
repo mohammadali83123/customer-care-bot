@@ -44,5 +44,5 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 <!-- Terminal 3 -->
 cd /Users/Ali/Documents/customer-care-bot
 source venv/bin/activate
-export REDIS_URL=redis://localhost:6379/0 
+export REDIS_URL=redis://redis:6379/0 
 celery -A app.tasks.celery worker --loglevel=info -Q celery
