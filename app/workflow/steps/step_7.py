@@ -2,7 +2,6 @@
 from typing import Dict, Any, List
 from app.services.agent import hardcoded_agentic_response
 from app.models import StepResult
-from app.utils.beautifier import WorkflowBeautifier
 
 async def execute(workflow_id: str, customer_id: str, customer_phone_number: str, event: Dict[str, Any], 
                   globals_: Dict[str, Any], logs: List[str]) -> Dict[str, Any]:
@@ -22,11 +21,6 @@ async def execute(workflow_id: str, customer_id: str, customer_phone_number: str
         }
     
     globals_["agent_output"] = agent_result.data
-    
-    # Enhanced logging with beautified agent output
-    beautifier = WorkflowBeautifier(workflow_id)
-    agent_output_formatted = beautifier.format_agent_output(agent_result.data)
-    logs.append(f"Step 7: agent executed (hardcoded)\n{agent_output_formatted}")
     
     return {"success": True}
 

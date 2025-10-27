@@ -19,37 +19,8 @@ def run_workflow_task(self, customer_id: str, customer_phone_number: str, event:
     try:
         # Run the workflow
         result = asyncio.get_event_loop().run_until_complete(
-            run_workflow_instance(workflow_id, customer_id, customer_phone_number, event, enable_visualization=True)
+            run_workflow_instance(workflow_id, customer_id, customer_phone_number, event)
         )
-        
-        # Print complete logs to terminal
-        print("\n" + "="*80)
-        print(f"🚀 WORKFLOW EXECUTION COMPLETE - ID: {workflow_id}")
-        print("="*80)
-        
-        # Print beautified tree if available
-        if "beautified_output" in result and "tree" in result["beautified_output"]:
-            print("\n📊 WORKFLOW TREE:")
-            print("-" * 50)
-            print(result["beautified_output"]["tree"])
-        
-        # Print complete logs if available
-        if "beautified_output" in result and "logs" in result["beautified_output"]:
-            print("\n📝 COMPLETE EXECUTION LOGS:")
-            print("-" * 50)
-            print(result["beautified_output"]["logs"])
-        
-        # Print summary
-        print("\n📋 EXECUTION SUMMARY:")
-        print("-" * 50)
-        print(f"Status: {result.get('status', 'unknown')}")
-        print(f"Final Status: {result.get('final_status', 'N/A')}")
-        if "logs" in result:
-            print(f"Total Log Entries: {len(result['logs'])}")
-        
-        print("="*80)
-        print("✅ WORKFLOW EXECUTION FINISHED")
-        print("="*80 + "\n")
         
         return result
         

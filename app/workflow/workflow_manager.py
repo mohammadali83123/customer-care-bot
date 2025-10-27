@@ -1,10 +1,8 @@
 # app/workflow/workflow_manager.py
 import logging
 import time
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 from app.workflow.steps import step_1, step_2, step_3, step_4, step_5, step_6, step_7, step_8, step_9
-from app.workflow.visualizer import WorkflowVisualizer
-from app.utils.beautifier import WorkflowBeautifier, StepStatus
 
 logger = logging.getLogger(__name__)
 
@@ -12,9 +10,9 @@ async def run_workflow_instance(
     workflow_id: str, 
     customer_id: str, 
     customer_phone_number: str, 
-    event: Dict[str, Any],
-    enable_visualization: bool = True
+    event: Dict[str, Any]
 ) -> Dict[str, Any]:
+
     """
     Main workflow orchestrator that executes all steps in sequence.
     
@@ -23,15 +21,10 @@ async def run_workflow_instance(
         customer_id: Customer ID for the workflow
         customer_phone_number: Customer phone number for the workflow
         event: Event data to process
-        enable_visualization: Whether to generate execution tree visualizations
     """
     logs = []
     globals_: Dict[str, Any] = {}
     final_status = None
-    
-    # Initialize visualizer and beautifier
-    visualizer = WorkflowVisualizer(workflow_id) if enable_visualization else None
-    beautifier = WorkflowBeautifier(workflow_id) if enable_visualization else None
     
     # Define all steps in order
     steps = [
@@ -56,45 +49,12 @@ async def run_workflow_instance(
             
             # Check if step failed
             if not result.get("success"):
-                if visualizer:
-                    visualizer.add_step(
-                        step_name=step_name,
-                        step_number=step_num,
-                        status="failed",
-                        details={"error": result.get("error", "Unknown error")},
-                        duration_ms=step_duration
-                    )
-                    visualizer.mark_complete()
-                
-                if beautifier:
-                    beautifier.add_step(
-                        step_number=step_num,
-                        step_name=step_name,
-                        status=StepStatus.FAILED,
-                        duration_ms=step_duration,
-                        details={"error": result.get("error", "Unknown error")}
-                    )
-                
                 response = {
                     "workflow_id": workflow_id,
                     "status": "failed",
                     "reason": result.get("reason", "unknown"),
                     "logs": logs
                 }
-                
-                if visualizer:
-                    response["visualization"] = {
-                        "text_tree": visualizer.get_text_tree(),
-                        "mermaid": visualizer.get_mermaid_diagram(),
-                        "json": visualizer.get_json_tree(),
-                        "simple_tree": visualizer.get_simple_tree()
-                    }
-                
-                if beautifier:
-                    response["beautified_output"] = {
-                        "tree": beautifier.get_beautified_tree(),
-                        "logs": beautifier.get_enhanced_logs(logs)
-                    }
                 
                 return response
             
@@ -104,47 +64,12 @@ async def run_workflow_instance(
                 final_status = result["final_status"]
                 step_details["branch"] = final_status
             
-            if visualizer:
-                visualizer.add_step(
-                    step_name=step_name,
-                    step_number=step_num,
-                    status="completed",
-                    details=step_details,
-                    duration_ms=step_duration
-                )
-            
-            if beautifier:
-                beautifier.add_step(
-                    step_number=step_num,
-                    step_name=step_name,
-                    status=StepStatus.SUCCESS,
-                    duration_ms=step_duration,
-                    details=step_details
-                )
                 
         except Exception as e:
             step_duration = (time.time() - step_start_time) * 1000
             logger.error(f"Error in {step_name}: {str(e)}")
             logs.append(f"{step_name} error: {str(e)}")
             
-            if visualizer:
-                visualizer.add_step(
-                    step_name=step_name,
-                    step_number=step_num,
-                    status="failed",
-                    details={"exception": str(e)},
-                    duration_ms=step_duration
-                )
-                visualizer.mark_complete()
-            
-            if beautifier:
-                beautifier.add_step(
-                    step_number=step_num,
-                    step_name=step_name,
-                    status=StepStatus.FAILED,
-                    duration_ms=step_duration,
-                    details={"exception": str(e)}
-                )
             
             response = {
                 "workflow_id": workflow_id,
@@ -154,25 +79,7 @@ async def run_workflow_instance(
                 "logs": logs
             }
             
-            if visualizer:
-                response["visualization"] = {
-                    "text_tree": visualizer.get_text_tree(),
-                    "mermaid": visualizer.get_mermaid_diagram(),
-                    "json": visualizer.get_json_tree(),
-                    "simple_tree": visualizer.get_simple_tree()
-                }
-            
-            if beautifier:
-                response["beautified_output"] = {
-                    "tree": beautifier.get_beautified_tree(),
-                    "logs": beautifier.get_enhanced_logs(logs)
-                }
-            
             return response
-    
-    # Mark workflow complete
-    if visualizer:
-        visualizer.mark_complete()
     
     # Return successful completion
     response = {
@@ -182,22 +89,6 @@ async def run_workflow_instance(
         "globals": globals_,
         "logs": logs
     }
-    
-    # Add visualization data
-    if visualizer:
-        response["visualization"] = {
-            "text_tree": visualizer.get_text_tree(),
-            "mermaid": visualizer.get_mermaid_diagram(),
-            "json": visualizer.get_json_tree(),
-            "simple_tree": visualizer.get_simple_tree()
-        }
-    
-    # Add beautified output
-    if beautifier:
-        response["beautified_output"] = {
-            "tree": beautifier.get_beautified_tree(),
-            "logs": beautifier.get_enhanced_logs(logs)
-        }
     
     return response
 
