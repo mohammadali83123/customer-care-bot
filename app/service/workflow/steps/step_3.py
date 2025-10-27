@@ -20,7 +20,7 @@ async def execute(workflow_id: str, customer_id: str, customer_phone_number: str
             "reason": "CHECK_CUSTOMER_REGISTRATION_API_FAILED"
         }
     
-    globals_["api1_response"] = result1.data
+    globals_["customer_registration_response"] = result1.data
 
     return {"success": True}
 

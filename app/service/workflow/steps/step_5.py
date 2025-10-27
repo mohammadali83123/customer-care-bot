@@ -20,7 +20,7 @@ async def execute(workflow_id: str, customer_id: str, customer_phone_number: str
             "reason": "FETCH_CUSTOMER_ORDERS_API_FAILED"
         }
     
-    globals_["api2_response"] = result2.data
+    globals_["customer_orders_response"] = result2.data
     
     return {"success": True}
 

@@ -8,8 +8,8 @@ async def execute(workflow_id: str, customer_id: str, customer_phone_number: str
     Combine API responses into final context.
     """
     globals_["final_context"] = {
-        "api1": globals_.get("api1_response"),
-        "api2": globals_.get("api2_response")
+        "customer_registration_response": globals_.get("customer_registration_response"),
+        "customer_orders_response": globals_.get("customer_orders_response")
     }
     logs.append("Step 6: set final context")
     return {"success": True}

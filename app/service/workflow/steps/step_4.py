@@ -7,9 +7,9 @@ async def execute(workflow_id: str, customer_id: str, customer_phone_number: str
     Step 4: Set Globals After API1
     Transform and store intermediate values from API1 response.
     """
-    api1_response = globals_.get("api1_response")
+    customer_registration_response = globals_.get("customer_registration_response")
     globals_["intermediate_value"] = {
-        "from_api1": api1_response.get("value") if api1_response else None
+        "from_customer_registration": customer_registration_response.get("value") if customer_registration_response else None
     }
     logs.append("Step 4: set globals after API1")
     return {"success": True}

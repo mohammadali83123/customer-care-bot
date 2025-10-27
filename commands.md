@@ -50,3 +50,7 @@ celery -A app.celery_config.tasks.celery worker --loglevel=info -Q celery
 <!-- For Hot Reload -->
 watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- \
     celery -A app.celery_config.tasks.celery worker --loglevel=info -Q celery
+
+
+<!-- Terminal 4 to view workflow json stored in redis in prettier -->
+redis-cli GET "celery-task-meta-bc7c8040-c4e4-41ff-9487-272a216872c3" | jq
