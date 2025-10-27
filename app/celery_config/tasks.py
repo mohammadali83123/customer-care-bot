@@ -1,9 +1,9 @@
 # app/tasks.py
 from celery import Celery
-from app.config import settings
+from app.config.config import settings
 import asyncio
 import logging
-from app.workflow.workflow_manager import run_workflow_instance
+from app.service.workflow.workflow_manager import run_workflow_instance
 
 # Set up logging for Celery
 logger = logging.getLogger(__name__)

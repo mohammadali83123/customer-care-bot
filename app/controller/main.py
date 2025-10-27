@@ -1,7 +1,7 @@
 # app/main.py
 from fastapi import FastAPI, HTTPException
-from app.models import WebhookRequest
-from app.tasks import run_workflow_task
+from app.entity.models import WebhookRequest
+from app.celery_config.tasks import run_workflow_task
 import uuid
 
 app = FastAPI(title="Customer Care Bot")

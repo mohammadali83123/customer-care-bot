@@ -2,7 +2,7 @@
 import logging
 import time
 from typing import Dict, Any
-from app.workflow.steps import step_1, step_2, step_3, step_4, step_5, step_6, step_7, step_8, step_9
+from app.service.workflow.steps import step_1, step_2, step_3, step_4, step_5, step_6, step_7, step_8, step_9
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 # app/services/apis.py
 import httpx
-from app.config import settings
-from app.models import StepResult
+from app.config.config import settings
+from app.entity.models import StepResult
 
 async def check_customer_registration_api(customer_phone_number: str) -> StepResult:
     async with httpx.AsyncClient() as client:

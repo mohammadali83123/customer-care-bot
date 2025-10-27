@@ -39,14 +39,14 @@ redis-server
 <!-- Terminal 2 -->
 cd /Users/Ali/Documents/customer-care-bot
 source venv/bin/activate
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn app.controller.main:app --host 0.0.0.0 --port 8000 --reload
 
 <!-- Terminal 3 -->
 cd /Users/Ali/Documents/customer-care-bot
 source venv/bin/activate
 export REDIS_URL=redis://redis:6379/0 
-celery -A app.tasks.celery worker --loglevel=info -Q celery
+celery -A app.celery_config.tasks.celery worker --loglevel=info -Q celery
 
 <!-- For Hot Reload -->
 watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- \
-    celery -A app.tasks.celery worker --loglevel=info -Q celery
+    celery -A app.celery_config.tasks.celery worker --loglevel=info -Q celery

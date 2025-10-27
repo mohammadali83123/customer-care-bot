@@ -1,7 +1,7 @@
 # app/workflow/steps/step_7.py
 from typing import Dict, Any, List
-from app.services.agent import hardcoded_agentic_response
-from app.models import StepResult
+from app.service.agent import hardcoded_agentic_response
+from app.entity.models import StepResult
 
 async def execute(workflow_id: str, customer_id: str, customer_phone_number: str, event: Dict[str, Any], 
                   globals_: Dict[str, Any], logs: List[str]) -> Dict[str, Any]:

@@ -1,6 +1,6 @@
 # app/services/agent.py
 from typing import Dict, Any
-from app.models import StepResult
+from app.entity.models import StepResult
 
 def hardcoded_agentic_response(customer_message: str, globals_: Dict[str, Any]) -> StepResult:
     """

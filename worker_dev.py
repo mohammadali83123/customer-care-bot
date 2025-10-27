@@ -24,7 +24,7 @@ class WorkerRestartHandler(FileSystemEventHandler):
         
         print("Starting Celery worker...")
         self.worker_process = subprocess.Popen([
-            "celery", "-A", "app.tasks.celery", "worker", 
+            "celery", "-A", "app.celery_config.tasks.celery", "worker", 
             "--loglevel=info", "-Q", "celery"
         ])
     
